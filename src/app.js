@@ -38,6 +38,38 @@ app.post("/students", async (req, res) => {
 
 })
 
+//get individual data with async awit
+
+app.get("/students", async (req, res) => {
+    try{
+       const studentData = await Student.find();
+       res.send(studentData)
+       console.log(studentData);
+    }catch(err){
+       res.send(err)
+    }
+
+})
+
+//get individual student data
+
+app.get("/students/:id", async (req, res) =>{
+    try{
+        const _id = req.params.id
+        const individualStudent = await Student.findById(_id);
+
+        if(! individualStudent){
+            res.status(404).send()
+        }else{
+            res.send(individualStudent)
+        }
+ 
+
+    }catch(err){
+        res.status(500).send(err)
+    }
+})
+
 
 
 app.listen(port, ()=>{
